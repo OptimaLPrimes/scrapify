@@ -61,7 +61,7 @@ export function ScrapeResultDisplay({ data }: { data: ScrapedData }) {
           </div>
         )}
 
-        <Accordion type="multiple" collapsible className="w-full" defaultValue={['meta-information', 'headings']}>
+        <Accordion type="multiple" className="w-full" defaultValue={['meta-information', 'headings']}>
           <DataSection title="Meta Information" icon={Tags}>
             {data.meta.description && <p><strong>Description:</strong> {data.meta.description}</p>}
             {data.meta.keywords && <p><strong>Keywords:</strong> {data.meta.keywords}</p>}
