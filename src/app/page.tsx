@@ -65,7 +65,7 @@ export default function HomePage() {
       </section>
       
       <section className="mb-16 md:mb-24">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="grid md:grid-cols-1 gap-8 items-center"> {/* Changed md:grid-cols-2 to md:grid-cols-1 */}
               <div>
                 <h2 className="text-3xl font-bold mb-6 font-headline">How It Works</h2>
                 <ol className="space-y-4">
@@ -92,16 +92,7 @@ export default function HomePage() {
                   </li>
                 </ol>
               </div>
-              <div className="rounded-lg overflow-hidden shadow-2xl">
-                 <Image 
-                    src="https://placehold.co/600x400.png" 
-                    alt="AetherScrape interface preview" 
-                    width={600} 
-                    height={400} 
-                    className="w-full h-auto"
-                    data-ai-hint="data analysis interface"
-                  />
-              </div>
+              {/* Removed the div containing the Image component */}
           </div>
       </section>
 
