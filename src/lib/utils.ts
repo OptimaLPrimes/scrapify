@@ -1,6 +1,108 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import type { ScrapedData } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+export function downloadJson(data: any, filename: string = "scraped_data.json") {
+  const jsonStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+// Basic CSV converter (can be expanded for more complex structures)
+function convertToCSV(objArray: any[] | object): string {
+  if (!objArray) return '';
+  const array = Array.isArray(objArray) ? objArray : [objArray];
+  if (array.length === 0) return '';
+
+  let csvStr = "";
+  
+  // Extract headers
+  const headers = Object.keys(array[0]);
+  csvStr += headers.join(",") + "\r\n";
+
+  for (const item of array) {
+    const row = headers.map(header => {
+      let cell = item[header] === null || item[header] === undefined ? "" : item[header];
+      if (typeof cell === 'object') {
+        cell = JSON.stringify(cell); // Stringify nested objects/arrays
+      }
+      // Escape double quotes and commas
+      cell = String(cell).replace(/"/g, '""');
+      if (String(cell).includes(",")) {
+        cell = `"${cell}"`;
+      }
+      return cell;
+    });
+    csvStr += row.join(",") + "\r\n";
+  }
+  return csvStr;
+}
+
+// Flattens ScrapedData for a simpler CSV export
+function flattenScrapedDataForCsv(data: ScrapedData): Record<string, any> {
+  return {
+    url: data.url,
+    scrapedAt: data.scrapedAt,
+    title: data.title,
+    metaDescription: data.meta.description,
+    metaKeywords: data.meta.keywords,
+    aiSummary: data.aiSummary,
+    aiContentType: data.aiContentType,
+    h1Headings: data.headings.h1.join(' | '),
+    h2Headings: data.headings.h2.join(' | '),
+    // For brevity, not including all h3-h6, paragraphs, links, images, tables, jsonLd directly
+    // as they can be very large and complex for a single CSV row.
+    // Consider separate exports or more advanced flattening for those.
+    paragraphCount: data.paragraphs.length,
+    linkCount: data.links.length,
+    imageCount: data.images.length,
+    tableCount: data.tables.length,
+    jsonLdItemCount: data.jsonLd.length,
+  };
+}
+
+
+export function downloadCsv(data: ScrapedData, filename: string = "scraped_data.csv") {
+  const flattenedData = flattenScrapedDataForCsv(data);
+  const csvStr = convertToCSV([flattenedData]); // convertToCSV expects an array
+  const blob = new Blob([csvStr], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+// For history CSV export
+export function downloadHistoryCsv(data: ScrapedData[], filename: string = "scrape_history.csv") {
+  const flattenedHistory = data.map(flattenScrapedDataForCsv);
+  const csvStr = convertToCSV(flattenedHistory);
+  const blob = new Blob([csvStr], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+// Simple unique ID generator
+export function generateUniqueId(): string {
+  return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
