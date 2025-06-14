@@ -23,7 +23,7 @@ export default function HomePage() {
       </section>
 
       <section className="grid md:grid-cols-3 gap-8 mb-16 md:mb-24">
-        <Card className="shadow-lg hover:shadow-xl transition-shadow">
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center text-2xl">
               <Zap className="h-7 w-7 mr-3 text-accent" />
@@ -36,7 +36,7 @@ export default function HomePage() {
             </p>
           </CardContent>
         </Card>
-        <Card className="shadow-lg hover:shadow-xl transition-shadow">
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center text-2xl">
               <Bot className="h-7 w-7 mr-3 text-accent" />
@@ -49,7 +49,7 @@ export default function HomePage() {
             </p>
           </CardContent>
         </Card>
-        <Card className="shadow-lg hover:shadow-xl transition-shadow">
+        <Card>
           <CardHeader>
             <CardTitle className="flex items-center text-2xl">
               <CheckCircle className="h-7 w-7 mr-3 text-accent" />
@@ -92,7 +92,6 @@ export default function HomePage() {
                   </li>
                 </ol>
               </div>
-              {/* Removed the div containing the Image component */}
           </div>
       </section>
 

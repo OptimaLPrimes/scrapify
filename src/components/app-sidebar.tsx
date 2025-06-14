@@ -79,7 +79,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
                 AetherScrape
             </Link>
         </header>
-        <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">
+        <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8 animate-fade-in-up">
             {children}
         </main>
       </SidebarInset>

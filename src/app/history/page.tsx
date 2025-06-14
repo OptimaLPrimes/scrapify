@@ -95,7 +95,7 @@ export default function HistoryPage() {
       ) : (
         <div className="space-y-6">
           {history.map((item) => (
-            <Card key={item.id} className="shadow-md hover:shadow-lg transition-shadow">
+            <Card key={item.id}>
               <CardHeader>
                 <div className="flex justify-between items-start">
                     <div>
