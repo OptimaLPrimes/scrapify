@@ -24,7 +24,6 @@ const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/chat", label: "Chat Scraper", icon: Bot },
   { href: "/history", label: "Scrape History", icon: History },
-  { href: "/api-docs", label: "API", icon: CodeXml },
 ];
 
 export function AppSidebar({ children }: { children: React.ReactNode }) {
