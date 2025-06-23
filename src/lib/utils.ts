@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import type { ScrapedData } from "./types";
+import type { ScrapedData, ScrapedImage } from "./types";
+import JSZip from 'jszip';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -106,3 +107,70 @@ export function downloadHistoryCsv(data: ScrapedData[], filename: string = "scra
 export function generateUniqueId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
+
+// Download all scraped images as a zip file
+export async function downloadImagesAsZip(images: ScrapedImage[], zipFilename: string) {
+    if (!images || images.length === 0) {
+      alert("No images to download.");
+      return;
+    }
+  
+    const zip = new JSZip();
+  
+    console.log("Preparing images for download...");
+  
+    const imageFetchPromises = images.map(async (image, index) => {
+      if (!image.src) {
+        return;
+      }
+      try {
+        // Note: This fetch is subject to CORS policy of the source domain.
+        const response = await fetch(image.src);
+        if (!response.ok) {
+          console.warn(`Skipping image ${image.src}: Failed to fetch (status ${response.status})`);
+          return;
+        }
+        const blob = await response.blob();
+        
+        let filename = `image_${index + 1}`;
+        try {
+            const url = new URL(image.src);
+            const pathSegments = url.pathname.split('/');
+            const lastSegment = pathSegments[pathSegments.length - 1];
+            if (lastSegment) {
+                filename = `${index}_${lastSegment.replace(/[^a-z0-9_.\-]/gi, '_')}`;
+            }
+        } catch(e) { /* use default filename */ }
+        
+        if (!/\\.[^/.]+$/.test(filename)) {
+            const extension = blob.type.split('/')[1] || 'jpg';
+            filename = `${filename}.${extension}`;
+        }
+  
+        zip.file(filename, blob);
+      } catch (error) {
+        console.error(`Could not fetch or add image ${image.src} to zip:`, error);
+      }
+    });
+  
+    await Promise.all(imageFetchPromises);
+  
+    if (Object.keys(zip.files).length === 0) {
+        alert("Could not fetch any of the images. This might be due to Cross-Origin (CORS) restrictions.");
+        return;
+    }
+
+    zip.generateAsync({ type: "blob" }).then(function(content) {
+      const url = URL.createObjectURL(content);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = zipFilename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }).catch(err => {
+        console.error("Failed to generate zip file", err);
+        alert("An error occurred while creating the zip file.");
+    });
+  }

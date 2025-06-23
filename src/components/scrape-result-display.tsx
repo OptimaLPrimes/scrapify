@@ -1,13 +1,14 @@
 "use client"
 
+import { useState } from "react";
 import type { ScrapedData, ScrapedLink, ScrapedImage, ScrapedDataTable } from "@/lib/types";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Download, ExternalLink, Image as ImageIcon, TableIcon, FileJson, FileText, Heading1, Heading2, Heading3, Type, LinkIcon, Info, Tags, CalendarDays } from "lucide-react";
+import { Download, ExternalLink, Image as ImageIcon, TableIcon, FileJson, FileText, Heading1, Heading2, Heading3, Type, LinkIcon, Info, Tags, CalendarDays, Loader2 } from "lucide-react";
 import { JsonViewer } from "./json-viewer";
-import { downloadJson, downloadCsv } from "@/lib/utils";
+import { downloadJson, downloadCsv, downloadImagesAsZip } from "@/lib/utils";
 import { ScrollArea } from "./ui/scroll-area";
 import Image from "next/image"; // Using next/image for placeholders
 
@@ -27,10 +28,25 @@ const DataSection: React.FC<{ title: string; icon: React.ElementType; children: 
 );
 
 export function ScrapeResultDisplay({ data }: { data: ScrapedData }) {
+  const [isDownloadingImages, setIsDownloadingImages] = useState(false);
+
   if (!data) return null;
 
   const sanitizeFilename = (name: string) => name.replace(/[^a-z0-9_\-]/gi, '_').toLowerCase();
   const filenameBase = sanitizeFilename(data.title || new URL(data.url).hostname);
+
+  const handleDownloadImages = async () => {
+    if (!data.images || data.images.length === 0) return;
+    setIsDownloadingImages(true);
+    try {
+      await downloadImagesAsZip(data.images, `${filenameBase}_images.zip`);
+    } catch (e) {
+      console.error("Image download failed", e);
+      // A toast notification could be used here for better user feedback
+    } finally {
+      setIsDownloadingImages(false);
+    }
+  };
 
   return (
     <Card className="w-full shadow-2xl mt-8">
@@ -171,6 +187,14 @@ export function ScrapeResultDisplay({ data }: { data: ScrapedData }) {
         </Button>
         <Button variant="outline" onClick={() => downloadCsv(data, `${filenameBase}.csv`)}>
           <FileText className="h-4 w-4 mr-2" /> Download CSV
+        </Button>
+        <Button variant="outline" onClick={handleDownloadImages} disabled={!data.images || data.images.length === 0 || isDownloadingImages}>
+          {isDownloadingImages ? (
+            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+          ) : (
+            <Download className="h-4 w-4 mr-2" />
+          )}
+          Download Images
         </Button>
       </CardFooter>
     </Card>
