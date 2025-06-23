@@ -24,7 +24,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 
-const HISTORY_STORAGE_KEY = "aetherScrapeHistory";
+const HISTORY_STORAGE_KEY = "scrapifyHistory";
 
 export default function HistoryPage() {
   const [history, setHistory] = useLocalStorage<ScrapeHistoryItem[]>(HISTORY_STORAGE_KEY, []);

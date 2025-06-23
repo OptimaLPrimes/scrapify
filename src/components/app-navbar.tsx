@@ -25,7 +25,7 @@ export function AppNavbar() {
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2 mr-6" onClick={() => setIsMobileMenuOpen(false)}>
           <Bot className="h-7 w-7 text-primary" />
-          <span className="font-bold text-xl hidden sm:inline-block">AetherScrape</span>
+          <span className="font-bold text-xl hidden sm:inline-block">Scrapify</span>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
@@ -60,7 +60,7 @@ export function AppNavbar() {
                   <div className="flex items-center justify-between p-4 border-b">
                     <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
                       <Bot className="h-7 w-7 text-primary" />
-                      <span className="font-bold text-lg">AetherScrape</span>
+                      <span className="font-bold text-lg">Scrapify</span>
                     </Link>
                     <SheetClose asChild>
                        <Button variant="ghost" size="icon">

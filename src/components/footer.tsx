@@ -17,7 +17,7 @@ export function Footer() {
       <div className="container py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h3 className="text-lg font-semibold text-primary mb-3">AetherScrape</h3>
+            <h3 className="text-lg font-semibold text-primary mb-3">Scrapify</h3>
             <p className="text-sm text-muted-foreground">
               Intelligent web scraping chatbot tool. Effortlessly extract, summarize, and classify web content with AI.
             </p>
@@ -51,7 +51,7 @@ export function Footer() {
         </div>
         <Separator className="my-6" />
         <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; {currentYear} AetherScrape. All rights reserved.</p>
+          <p>&copy; {currentYear} Scrapify. All rights reserved.</p>
           <div className="flex space-x-4 mt-4 sm:mt-0">
             <Link href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
             <Link href="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</Link>

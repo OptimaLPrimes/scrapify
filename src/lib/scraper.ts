@@ -4,7 +4,7 @@ import type { ScrapedData, ScrapedDataTable, ScrapedLink, ScrapedImage } from '.
 // Helper to fetch HTML content
 async function fetchHtml(url: string): Promise<string> {
   try {
-    const response = await fetch(url, { headers: { 'User-Agent': 'AetherScrapeBot/1.0' } });
+    const response = await fetch(url, { headers: { 'User-Agent': 'ScrapifyBot/1.0' } });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status} for URL: ${url}`);
     }

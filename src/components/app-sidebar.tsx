@@ -35,7 +35,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
         <SidebarHeader className="p-4">
           <Link href="/" className="flex items-center gap-2 group-data-[collapsible=icon]:justify-center">
             <Bot className="h-7 w-7 text-primary" />
-            <span className="font-bold text-lg group-data-[collapsible=icon]:hidden">AetherScrape</span>
+            <span className="font-bold text-lg group-data-[collapsible=icon]:hidden">Scrapify</span>
           </Link>
         </SidebarHeader>
         <SidebarContent className="flex-1 p-2">
@@ -65,7 +65,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
             <div className="flex flex-col gap-2 group-data-[collapsible=icon]:items-center">
                  <Separator className="my-2 group-data-[collapsible=icon]:hidden"/>
                 <div className="flex items-center justify-between group-data-[collapsible=icon]:flex-col group-data-[collapsible=icon]:gap-2">
-                    <p className="text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">© 2024 AetherScrape</p>
+                    <p className="text-xs text-muted-foreground group-data-[collapsible=icon]:hidden">© 2024 Scrapify</p>
                     <ThemeToggleButton />
                 </div>
             </div>
@@ -76,7 +76,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
             <SidebarTrigger />
             <Link href="/" className="flex items-center gap-2 font-bold text-lg">
                 <Bot className="h-6 w-6 text-primary" />
-                AetherScrape
+                Scrapify
             </Link>
         </header>
         <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8 animate-fade-in-up">

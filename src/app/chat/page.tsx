@@ -10,7 +10,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 import { generateUniqueId } from "@/lib/utils";
 
-const HISTORY_STORAGE_KEY = "aetherScrapeHistory";
+const HISTORY_STORAGE_KEY = "scrapifyHistory";
 
 export default function ChatPage() {
   const [scrapedData, setScrapedData] = useState<ScrapedData | null>(null);
@@ -60,7 +60,7 @@ export default function ChatPage() {
       <header className="mb-8">
         <h1 className="text-3xl md:text-4xl font-bold font-headline text-primary">Chat Scraper</h1>
         <p className="text-muted-foreground mt-2 text-lg">
-          Enter a URL below to scrape its content. AetherScrape will extract data, summarize it, and classify its type using AI.
+          Enter a URL below to scrape its content. Scrapify will extract data, summarize it, and classify its type using AI.
         </p>
       </header>
       

@@ -24,8 +24,8 @@ const fontPoppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'AetherScrape - Smart Web Scraper',
-  description: 'Intelligent web scraping chatbot tool by AetherScrape.',
+  title: 'Scrapify - Smart Web Scraper',
+  description: 'Intelligent web scraping chatbot tool by Scrapify.',
   icons: {
     icon: '/favicon.ico',
   },

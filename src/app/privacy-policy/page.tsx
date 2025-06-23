@@ -6,12 +6,12 @@ export default function PrivacyPolicyPage() {
       <div className="prose dark:prose-invert max-w-none lg:prose-lg">
         <p className="lead">Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
 
-        <p>Welcome to AetherScrape! Your privacy is important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our web scraping chatbot tool ("Service"). Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the Service.</p>
+        <p>Welcome to Scrapify! Your privacy is important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our web scraping chatbot tool ("Service"). Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the Service.</p>
 
         <h2>1. Information We Collect</h2>
         <p>We may collect information about you in a variety of ways. The information we may collect via the Service includes:</p>
         <ul>
-          <li><strong>Usage Data:</strong> When you use AetherScrape, we automatically collect information about your interaction with the Service. This may include the URLs you scrape, the features you use, your IP address, browser type, operating system, access times, and the pages you have viewed directly before and after accessing the Service.</li>
+          <li><strong>Usage Data:</strong> When you use Scrapify, we automatically collect information about your interaction with the Service. This may include the URLs you scrape, the features you use, your IP address, browser type, operating system, access times, and the pages you have viewed directly before and after accessing the Service.</li>
           <li><strong>Scraped Data History:</strong> If you choose to use features that store your scraping history (e.g., via local storage in your browser), this data is stored on your device and is not transmitted to our servers unless explicitly stated for a specific feature.</li>
           <li><strong>AI Interaction Data:</strong> Information processed by our AI models for summarization and classification is handled as described in our AI Data Usage section.</li>
         </ul>
@@ -51,7 +51,7 @@ export default function PrivacyPolicyPage() {
 
         <h2>7. Cookies and Tracking Technologies</h2>
         <p>We may use cookies and similar tracking technologies to track the activity on our Service and hold certain information. Cookies are files with a small amount of data which may include an anonymous unique identifier. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our Service.</p>
-        <p>Currently, AetherScrape primarily uses local storage for functional purposes like storing theme preferences and scrape history. We do not use third-party tracking cookies for advertising.</p>
+        <p>Currently, Scrapify primarily uses local storage for functional purposes like storing theme preferences and scrape history. We do not use third-party tracking cookies for advertising.</p>
 
         <h2>8. Children's Privacy</h2>
         <p>Our Service is not intended for use by children under the age of 13. We do not knowingly collect personally identifiable information from children under 13. If we become aware that we have collected Personal Data from children without verification of parental consent, we take steps to remove that information from our servers.</p>
@@ -60,7 +60,7 @@ export default function PrivacyPolicyPage() {
         <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date. You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
 
         <h2>10. Contact Us</h2>
-        <p>If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:privacy@aetherscrape.example.com" className="text-primary hover:underline">privacy@aetherscrape.example.com</a> (Note: This is a placeholder email).</p>
+        <p>If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:privacy@scrapify.example.com" className="text-primary hover:underline">privacy@scrapify.example.com</a> (Note: This is a placeholder email).</p>
       </div>
     </div>
   );
