@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import type { ScrapedData, ScrapedImage } from "./types";
+import type { ScrapedData, ScrapedDataTable, ScrapedImage } from "./types";
 import JSZip from 'jszip';
 
 export function cn(...inputs: ClassValue[]) {
@@ -107,6 +107,52 @@ export function downloadHistoryCsv(data: ScrapedData[], filename: string = "scra
 export function generateUniqueId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
+
+// Helper function to safely format a cell for CSV
+function formatCsvCell(cell: any): string {
+    let cellStr = cell === null || cell === undefined ? "" : String(cell);
+    // Escape double quotes by doubling them
+    cellStr = cellStr.replace(/"/g, '""');
+    // If the cell contains a comma, a newline, or a double quote, enclose it in double quotes
+    if (cellStr.includes(",") || cellStr.includes("\n") || cellStr.includes('"')) {
+      cellStr = `"${cellStr}"`;
+    }
+    return cellStr;
+}
+  
+function tableToCsvString(table: ScrapedDataTable): string {
+    let csv = '';
+    
+    // Add headers
+    if (table.headers.length > 0) {
+        csv += table.headers.map(formatCsvCell).join(',') + '\r\n';
+    }
+    
+    // Add rows
+    table.rows.forEach(row => {
+        csv += row.map(formatCsvCell).join(',') + '\r\n';
+    });
+    
+    return csv;
+}
+
+export function downloadTableAsCsv(table: ScrapedDataTable, filename: string) {
+    const csvStr = tableToCsvString(table);
+    if (!csvStr.trim()) {
+        alert("This table has no data to download.");
+        return;
+    }
+    const blob = new Blob([csvStr], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+
 
 // Download all scraped images as a zip file
 export async function downloadImagesAsZip(images: ScrapedImage[], zipFilename: string) {

@@ -6,9 +6,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Download, ExternalLink, Image as ImageIcon, TableIcon, FileJson, FileText, Heading1, Heading2, Heading3, Type, LinkIcon, Info, Tags, CalendarDays, Loader2 } from "lucide-react";
+import { Download, ExternalLink, Image as ImageIcon, TableIcon, FileJson, FileText, Heading1, Heading2, Heading3, Type, LinkIcon, Info, Tags, CalendarDays, Loader2, FileDown } from "lucide-react";
 import { JsonViewer } from "./json-viewer";
-import { downloadJson, downloadCsv, downloadImagesAsZip } from "@/lib/utils";
+import { downloadJson, downloadCsv, downloadImagesAsZip, downloadTableAsCsv } from "@/lib/utils";
 import { ScrollArea } from "./ui/scroll-area";
 import Image from "next/image"; // Using next/image for placeholders
 
@@ -148,9 +148,19 @@ export function ScrapeResultDisplay({ data }: { data: ScrapedData }) {
           <DataSection title="Tables" icon={TableIcon} badgeCount={data.tables.length}>
             <ScrollArea className="max-h-[400px] p-1">
               {data.tables.length > 0 ? data.tables.map((table: ScrapedDataTable, i: number) => (
-                <div key={table.id || i} className="mb-4 border rounded p-2">
-                  {table.caption && <p className="font-semibold text-center italic mb-1">{table.caption}</p>}
-                  <div className="overflow-x-auto">
+                <div key={table.id || i} className="mb-4 border rounded">
+                  <div className="flex justify-between items-center p-2 bg-muted/50 border-b">
+                    <p className="font-semibold italic text-sm truncate pr-2">{table.caption || `Table ${i + 1}`}</p>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => downloadTableAsCsv(table, `${filenameBase}_${sanitizeFilename(table.caption || `table_${i+1}`)}.csv`)}
+                    >
+                      <FileDown className="h-4 w-4 mr-2" />
+                      Download CSV
+                    </Button>
+                  </div>
+                  <div className="p-2 overflow-x-auto">
                     <table className="min-w-full divide-y divide-border text-sm">
                       {table.headers.length > 0 && (
                         <thead className="bg-muted/50">
@@ -163,7 +173,7 @@ export function ScrapeResultDisplay({ data }: { data: ScrapedData }) {
                     </table>
                   </div>
                 </div>
-              )) : <p className="text-muted-foreground">No tables found.</p>}
+              )) : <p className="text-muted-foreground p-2">No tables found.</p>}
             </ScrollArea>
           </DataSection>
           
