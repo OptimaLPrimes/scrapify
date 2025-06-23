@@ -124,10 +124,10 @@ export async function downloadImagesAsZip(images: ScrapedImage[], zipFilename: s
         return;
       }
       try {
-        // Note: This fetch is subject to CORS policy of the source domain.
-        const response = await fetch(image.src);
+        // Use the server-side proxy to bypass CORS issues.
+        const response = await fetch(`/api/proxy-image?url=${encodeURIComponent(image.src)}`);
         if (!response.ok) {
-          console.warn(`Skipping image ${image.src}: Failed to fetch (status ${response.status})`);
+          console.warn(`Skipping image ${image.src}: Failed to fetch via proxy (status ${response.status})`);
           return;
         }
         const blob = await response.blob();
@@ -142,7 +142,8 @@ export async function downloadImagesAsZip(images: ScrapedImage[], zipFilename: s
             }
         } catch(e) { /* use default filename */ }
         
-        if (!/\\.[^/.]+$/.test(filename)) {
+        // Ensure file has an extension
+        if (!/\.[^/.]+$/.test(filename)) {
             const extension = blob.type.split('/')[1] || 'jpg';
             filename = `${filename}.${extension}`;
         }
@@ -156,7 +157,7 @@ export async function downloadImagesAsZip(images: ScrapedImage[], zipFilename: s
     await Promise.all(imageFetchPromises);
   
     if (Object.keys(zip.files).length === 0) {
-        alert("Could not fetch any of the images. This might be due to Cross-Origin (CORS) restrictions.");
+        alert("Could not fetch any of the images. This might be due to server errors or the images being inaccessible.");
         return;
     }
 
