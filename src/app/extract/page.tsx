@@ -18,6 +18,7 @@ import { useState } from "react"
 import { useToast } from "@/hooks/use-toast"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
 
 const formSchema = z.object({
   url: z.string().url({ message: "Please enter a valid URL." }),
@@ -127,8 +128,27 @@ export default function ExtractPage() {
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
+      
+      {isLoading && (
+        <section className="animate-fade-in">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-2xl">
+                <Sparkles className="h-6 w-6 text-accent" />
+                <Skeleton className="h-7 w-48" />
+              </CardTitle>
+              <CardDescription>
+                <Skeleton className="h-5 w-64" />
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Skeleton className="h-14 w-full rounded-md" />
+            </CardContent>
+          </Card>
+        </section>
+      )}
 
-      {result && (
+      {result && !isLoading && (
         <section>
           <Card>
             <CardHeader>

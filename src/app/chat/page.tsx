@@ -9,6 +9,7 @@ import useLocalStorage from "@/hooks/use-local-storage";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 import { generateUniqueId } from "@/lib/utils";
+import { ScrapeResultSkeleton } from "@/components/scrape-result-skeleton";
 
 const HISTORY_STORAGE_KEY = "scrapifyHistory";
 
@@ -76,7 +77,9 @@ export default function ChatPage() {
         </Alert>
       )}
 
-      {scrapedData && (
+      {isLoading && <ScrapeResultSkeleton />}
+
+      {scrapedData && !isLoading && (
         <section>
           <ScrapeResultDisplay data={scrapedData} />
         </section>
