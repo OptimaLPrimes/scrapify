@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import type { ScrapedData, ScrapedDataTable, ScrapedImage } from "./types";
 import JSZip from 'jszip';
+import * as XLSX from 'xlsx';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -108,49 +109,24 @@ export function generateUniqueId(): string {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
 
-// Helper function to safely format a cell for CSV
-function formatCsvCell(cell: any): string {
-    let cellStr = cell === null || cell === undefined ? "" : String(cell);
-    // Escape double quotes by doubling them
-    cellStr = cellStr.replace(/"/g, '""');
-    // If the cell contains a comma, a newline, or a double quote, enclose it in double quotes
-    if (cellStr.includes(",") || cellStr.includes("\n") || cellStr.includes('"')) {
-      cellStr = `"${cellStr}"`;
-    }
-    return cellStr;
-}
+export function downloadTableAsXlsx(table: ScrapedDataTable, filename: string) {
+  if (table.headers.length === 0 && table.rows.length === 0) {
+    alert("This table has no data to download.");
+    return;
+  }
   
-function tableToCsvString(table: ScrapedDataTable): string {
-    let csv = '';
-    
-    // Add headers
-    if (table.headers.length > 0) {
-        csv += table.headers.map(formatCsvCell).join(',') + '\r\n';
-    }
-    
-    // Add rows
-    table.rows.forEach(row => {
-        csv += row.map(formatCsvCell).join(',') + '\r\n';
-    });
-    
-    return csv;
-}
+  // The data needs to be an array of arrays for sheet_add_aoa
+  const dataForSheet = [
+      table.headers,
+      ...table.rows
+  ];
 
-export function downloadTableAsCsv(table: ScrapedDataTable, filename: string) {
-    const csvStr = tableToCsvString(table);
-    if (!csvStr.trim()) {
-        alert("This table has no data to download.");
-        return;
-    }
-    const blob = new Blob([csvStr], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+  const ws = XLSX.utils.aoa_to_sheet(dataForSheet);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+  // Generate XLSX file and trigger download
+  XLSX.writeFile(wb, filename);
 }
 
 

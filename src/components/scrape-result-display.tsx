@@ -6,9 +6,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Download, ExternalLink, Image as ImageIcon, TableIcon, FileJson, FileText, Heading1, Heading2, Heading3, Type, LinkIcon, Info, Tags, CalendarDays, Loader2, FileDown } from "lucide-react";
+import { Download, ExternalLink, Image as ImageIcon, TableIcon, FileJson, FileText, Heading1, Heading2, Heading3, Type, LinkIcon, Info, Tags, CalendarDays, Loader2, FileSpreadsheet } from "lucide-react";
 import { JsonViewer } from "./json-viewer";
-import { downloadJson, downloadCsv, downloadImagesAsZip, downloadTableAsCsv } from "@/lib/utils";
+import { downloadJson, downloadCsv, downloadImagesAsZip, downloadTableAsXlsx } from "@/lib/utils";
 import { ScrollArea } from "./ui/scroll-area";
 import Image from "next/image"; // Using next/image for placeholders
 
@@ -154,10 +154,10 @@ export function ScrapeResultDisplay({ data }: { data: ScrapedData }) {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => downloadTableAsCsv(table, `${filenameBase}_${sanitizeFilename(table.caption || `table_${i+1}`)}.csv`)}
+                      onClick={() => downloadTableAsXlsx(table, `${filenameBase}_${sanitizeFilename(table.caption || `table_${i+1}`)}.xlsx`)}
                     >
-                      <FileDown className="h-4 w-4 mr-2" />
-                      Download CSV
+                      <FileSpreadsheet className="h-4 w-4 mr-2" />
+                      Download Excel
                     </Button>
                   </div>
                   <div className="p-2 overflow-x-auto">
