@@ -28,7 +28,6 @@ export function Footer() {
               <li><Link href="/" className="text-muted-foreground hover:text-primary transition-colors">Home</Link></li>
               <li><Link href="/chat" className="text-muted-foreground hover:text-primary transition-colors">Chat Scraper</Link></li>
               <li><Link href="/history" className="text-muted-foreground hover:text-primary transition-colors">History</Link></li>
-              <li><Link href="/docs" className="text-muted-foreground hover:text-primary transition-colors">Documentation</Link></li>
             </ul>
           </div>
           <div>
