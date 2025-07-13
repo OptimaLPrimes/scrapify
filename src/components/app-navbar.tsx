@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bot, Menu, Home, History, X, SearchCode } from "lucide-react";
+import { Bot, Menu, Home, History, X } from "lucide-react";
 import { ThemeToggleButton } from "./theme-toggle-button";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "./ui/sheet";
@@ -13,7 +13,6 @@ import React from "react";
 const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/chat", label: "Chat Scraper", icon: Bot },
-  { href: "/extract", label: "Extractor", icon: SearchCode },
   { href: "/history", label: "Scrape History", icon: History },
 ];
 
